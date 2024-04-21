@@ -2,10 +2,11 @@ import { useEffect } from 'react';
 import Checkbox from '@/Components/Checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
+import SecondaryButton from '@/Components/SecondaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
+import LineWithText from '../../Components/LineWithText';
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -13,7 +14,7 @@ export default function Login({ status, canResetPassword }) {
         password: '',
         remember: false,
     });
-
+    
     useEffect(() => {
         return () => {
             reset('password');
@@ -33,15 +34,14 @@ export default function Login({ status, canResetPassword }) {
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
 
             <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="email" value="Email" />
-
+                <div>        
                     <TextInput
                         id="email"
                         type="email"
                         name="email"
+                        placeholder="Email"
                         value={data.email}
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full placeholder-gray-400 placeholder:font-bold "
                         autoComplete="username"
                         isFocused={true}
                         onChange={(e) => setData('email', e.target.value)}
@@ -51,14 +51,13 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
                     <TextInput
                         id="password"
                         type="password"
                         name="password"
+                        placeholder="Password"
                         value={data.password}
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full placeholder-gray-400 placeholder:font-bold"
                         autoComplete="current-password"
                         onChange={(e) => setData('password', e.target.value)}
                     />
@@ -66,7 +65,7 @@ export default function Login({ status, canResetPassword }) {
                     <InputError message={errors.password} className="mt-2" />
                 </div>
 
-                <div className="block mt-4">
+                <div className="flex items-center justify-between mt-4">
                     <label className="flex items-center">
                         <Checkbox
                             name="remember"
@@ -75,9 +74,7 @@ export default function Login({ status, canResetPassword }) {
                         />
                         <span className="ms-2 text-sm text-gray-600">Remember me</span>
                     </label>
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
+                    <label className="flex items-center">
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}
@@ -86,11 +83,35 @@ export default function Login({ status, canResetPassword }) {
                             Forgot your password?
                         </Link>
                     )}
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                    </label>
+                </div>
+                
+                <div className="flex items-center mt-4">
+                    <PrimaryButton className="w-full justify-center" disabled={processing}>
                         Log in
                     </PrimaryButton>
                 </div>
+
+
+                <LineWithText text="or" className='mt-8'/>
+
+                <div className="flex items-center mt-8">
+                    <SecondaryButton className="w-full justify-center" disabled={processing}>
+                        Log in with Google
+                    </SecondaryButton>
+                </div>
+
+                <div className="flex items-center justify-center mt-8">
+                    <label className="flex items-center">
+                    <Link
+                        href={route('register')}
+                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                        Don't have an account?
+                    </Link>
+                    </label>
+                </div>
+                
             </form>
         </GuestLayout>
     );
