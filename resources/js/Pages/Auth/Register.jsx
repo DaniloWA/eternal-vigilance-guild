@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
+import LineWithText from '@/Components/LineWithText';
+import SecondaryButton from '@/Components/SecondaryButton';
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -32,14 +33,13 @@ export default function Register() {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
-
                     <TextInput
                         id="name"
                         name="name"
                         value={data.name}
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full placeholder-gray-400 placeholder:font-bold"
                         autoComplete="name"
+                        placeholder="Name"
                         isFocused={true}
                         onChange={(e) => setData('name', e.target.value)}
                         required
@@ -48,15 +48,15 @@ export default function Register() {
                     <InputError message={errors.name} className="mt-2" />
                 </div>
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
+                <div className="mt-4"> 
 
                     <TextInput
                         id="email"
                         type="email"
                         name="email"
+                        placeholder="Email"
                         value={data.email}
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full placeholder-gray-400 placeholder:font-bold"
                         autoComplete="username"
                         onChange={(e) => setData('email', e.target.value)}
                         required
@@ -66,14 +66,15 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                  
 
                     <TextInput
                         id="password"
                         type="password"
                         name="password"
+                        placeholder="Password"
                         value={data.password}
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full placeholder-gray-400 placeholder:font-bold"
                         autoComplete="new-password"
                         onChange={(e) => setData('password', e.target.value)}
                         required
@@ -83,14 +84,15 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
+                  
 
                     <TextInput
                         id="password_confirmation"
                         type="password"
                         name="password_confirmation"
+                        placeholder="Confirm Password"
                         value={data.password_confirmation}
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full placeholder-gray-400 placeholder:font-bold "
                         autoComplete="new-password"
                         onChange={(e) => setData('password_confirmation', e.target.value)}
                         required
@@ -98,18 +100,28 @@ export default function Register() {
 
                     <InputError message={errors.password_confirmation} className="mt-2" />
                 </div>
-
                 <div className="flex items-center justify-end mt-4">
+                    <label className="flex items-center">
                     <Link
                         href={route('login')}
                         className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                         Already registered?
                     </Link>
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                    </label>
+                </div>
+                <div className="flex items-center w-full mt-4">
+                    <PrimaryButton className="w-full justify-center" disabled={processing}>
                         Register
                     </PrimaryButton>
+                </div>
+
+                <LineWithText text="or" className='mt-8'/>
+
+                <div className="flex items-center mt-8">
+                    <SecondaryButton className="w-full justify-center" disabled={processing}>
+                        Log in with Google
+                    </SecondaryButton>
                 </div>
             </form>
         </GuestLayout>
